@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Link Manager</title>
+  style.css
+</head>
+<body>
+  <div class="container">
+    <h1>Link Manager</h1>
+
+    <div class="form">
+      <input type="text" id="category" placeholder="Category" />
+      <input type="text" id="link" placeholder="Link URL" />
+      <button onclick="addLink()">Add Link</button>
+    </div>
+
+    <div class="actions">
+      <select id="categorySelect" onchange="displayLinks()">
+        <option value="">-- Select Category --</option>
+      </select>
+      onclick="exportLinks()">Export JSON</button>
+      <input type="file" id="importFile" accept=".json" onchange="importLinks()" />
+    </div>
+
+    <ul id="linkList"></ul>
+  </div>
+
+  script.js</script>
+</body>
+</html>
