@@ -7,28 +7,28 @@
     <title>Link Manager</title>
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --success: #4cc9f0;
-            --danger: #f72585;
-            --warning: #f8961e;
-            --dark: #212529;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --border: #dee2e6;
-            --shadow: rgba(0, 0, 0, 0.1);
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --background-color: #f5f7fa;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --text-light: #666666;
+            --danger-color: #e57373;
+            --success-color: #81c784;
+            --border-color: #e0e0e0;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f0f2f5;
-            color: var(--dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             line-height: 1.6;
             padding: 20px;
         }
@@ -36,16 +36,13 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px var(--shadow);
+            color: var(--primary-color);
         }
 
         h1 {
@@ -54,196 +51,186 @@
         }
 
         .subtitle {
+            color: var(--text-light);
             font-size: 1.1rem;
-            opacity: 0.9;
+        }
+
+        .app-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .sidebar {
+            flex: 1;
+            min-width: 280px;
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .panel {
-            background: white;
+            flex: 3;
+            min-width: 300px;
+            background-color: var(--card-color);
             border-radius: 10px;
-            box-shadow: 0 2px 10px var(--shadow);
             padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .categories-panel {
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--primary-color);
+        }
+
+        /* Category Styles */
+        .category-list {
+            list-style: none;
             margin-bottom: 20px;
         }
 
-        .category-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .category-header h2 {
-            font-size: 1.5rem;
-            color: var(--dark);
-        }
-
-        .category-list {
-            list-style: none;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
         .category-item {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            background-color: var(--light);
-            border-radius: 6px;
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 12px 15px;
+            background-color: var(--background-color);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .category-item:hover {
-            background-color: #e9ecef;
+            background-color: #e8f0fe;
         }
 
         .category-item.active {
-            background-color: var(--primary);
+            background-color: var(--accent-color);
             color: white;
         }
 
-        .category-item .delete-btn {
-            background: none;
+        .category-item.active:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn {
+            padding: 8px 12px;
             border: none;
-            color: var(--danger);
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 1.2rem;
-            opacity: 0;
-            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
-        .category-item:hover .delete-btn {
-            opacity: 1;
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 0.8rem;
         }
 
-        .category-item.active .delete-btn {
+        .btn-primary {
+            background-color: var(--primary-color);
             color: white;
-            opacity: 1;
         }
 
-        .add-category {
-            display: flex;
-            margin-top: 15px;
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
         }
 
-        .add-category input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid var(--border);
-            border-radius: 6px 0 0 6px;
-            font-size: 1rem;
-        }
-
-        .add-category button {
-            background-color: var(--primary);
+        .btn-danger {
+            background-color: var(--danger-color);
             color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 0 6px 6px 0;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
         }
 
-        .add-category button:hover {
-            background-color: var(--secondary);
+        .btn-danger:hover {
+            background-color: #d32f2f;
         }
 
-        .links-panel {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .links-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .links-header h2 {
-            font-size: 1.5rem;
-            color: var(--dark);
-        }
-
-        .links-header .category-title {
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .add-link {
-            display: flex;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
-
-        .add-link input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-
-        .add-link button {
-            background-color: var(--success);
+        .btn-success {
+            background-color: var(--success-color);
             color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
+        }
+
+        .btn-success:hover {
+            background-color: #66bb6a;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--background-color);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
             font-size: 1rem;
-            transition: background-color 0.3s;
+            transition: border 0.3s ease;
         }
 
-        .add-link button:hover {
-            background-color: #38b6e0;
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
         }
 
-        .link-list {
-            list-style: none;
-            flex: 1;
-            overflow-y: auto;
-            max-height: 400px;
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Links List Styles */
+        .links-container {
+            margin-top: 20px;
         }
 
         .link-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            background-color: var(--light);
-            border-radius: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 12px 15px;
+            background-color: var(--background-color);
+            border-radius: 6px;
+            margin-bottom: 8px;
             transition: all 0.3s ease;
         }
 
         .link-item:hover {
-            background-color: #e9ecef;
+            background-color: #e8f0fe;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px var(--shadow);
         }
 
         .link-info {
@@ -251,123 +238,144 @@
         }
 
         .link-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
+            font-weight: 600;
+            margin-bottom: 3px;
         }
 
         .link-url {
-            color: var(--gray);
             font-size: 0.9rem;
+            color: var(--text-light);
             word-break: break-all;
         }
 
         .link-actions {
             display: flex;
-            gap: 10px;
-        }
-
-        .link-actions button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 5px;
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-
-        .link-actions .visit-btn {
-            color: var(--success);
-        }
-
-        .link-actions .visit-btn:hover {
-            background-color: rgba(76, 201, 240, 0.1);
-        }
-
-        .link-actions .delete-btn {
-            color: var(--danger);
-        }
-
-        .link-actions .delete-btn:hover {
-            background-color: rgba(247, 37, 133, 0.1);
-        }
-
-        .export-import-panel {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .export-import-panel button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .export-btn {
-            background-color: var(--warning);
-            color: white;
-        }
-
-        .export-btn:hover {
-            background-color: #e07a07;
-        }
-
-        .import-btn {
-            background-color: var(--dark);
-            color: white;
-        }
-
-        .import-btn:hover {
-            background-color: #343a40;
-        }
-
-        .import-btn input {
-            display: none;
+            gap: 8px;
         }
 
         .empty-state {
             text-align: center;
             padding: 40px 20px;
-            color: var(--gray);
+            color: var(--text-light);
         }
 
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            display: block;
+        .empty-state p {
+            margin: 10px 0;
         }
 
-        .notification {
+        /* Import/Export Styles */
+        .import-export {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            .import-export {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Toast notification */
+        .toast {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 15px 25px;
-            border-radius: 6px;
-            background-color: var(--success);
+            background-color: var(--success-color);
             color: white;
-            box-shadow: 0 4px 12px var(--shadow);
-            transform: translateX(200%);
-            transition: transform 0.3s ease;
+            padding: 15px 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
         }
 
-        .notification.show {
-            transform: translateX(0);
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .notification.error {
-            background-color: var(--danger);
+        .toast.error {
+            background-color: var(--danger-color);
         }
 
-        .notification.warning {
-            background-color: var(--warning);
+        /* Confirmation dialog */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-color);
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
         }
     </style>
 </head>
@@ -375,271 +383,389 @@
     <div class="container">
         <header>
             <h1>Link Manager</h1>
-            <p class="subtitle">Organize your bookmarks with categories</p>
+            <p class="subtitle">Organize your favorite links with ease</p>
         </header>
 
-        <div class="main-content">
-            <div class="panel categories-panel">
-                <div class="category-header">
-                    <h2>Categories</h2>
-                    <span id="category-count">0</span>
+        <div class="app-container">
+            <div class="sidebar">
+                <h2 class="section-title">Categories</h2>
+                
+                <div class="form-group">
+                    <label for="category-name">New Category</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="text" id="category-name" placeholder="Enter category name">
+                        <button id="add-category" class="btn btn-primary">Add</button>
+                    </div>
                 </div>
+                
                 <ul id="category-list" class="category-list">
-                    <!-- Categories will be added here dynamically -->
+                    <!-- Categories will be added here -->
                 </ul>
-                <div class="add-category">
-                    <input type="text" id="new-category" placeholder="Add new category">
-                    <button id="add-category-btn">Add</button>
+                
+                <div class="import-export">
+                    <button id="export-btn" class="btn btn-outline">Export All</button>
+                    <label for="import-file" class="btn btn-outline">Import</label>
+                    <input type="file" id="import-file" class="file-input" accept=".json">
                 </div>
             </div>
-
-            <div class="panel links-panel">
-                <div class="links-header">
-                    <h2>Links in <span class="category-title" id="current-category">None</span></h2>
-                    <span id="link-count">0</span>
+            
+            <div class="main-content">
+                <h2 class="section-title">Links</h2>
+                
+                <div id="no-category-selected" class="empty-state">
+                    <p>Select a category to view links</p>
                 </div>
-                <div class="add-link">
-                    <input type="text" id="link-title" placeholder="Link title">
-                    <input type="url" id="link-url" placeholder="https://example.com">
-                    <button id="add-link-btn">Add Link</button>
-                </div>
-                <ul id="link-list" class="link-list">
-                    <!-- Links will be added here dynamically -->
-                </ul>
-                <div class="export-import-panel">
-                    <button id="export-btn" class="export-btn">Export Category</button>
-                    <button id="import-btn" class="import-btn">
-                        Import Links
-                        <input type="file" id="import-file" accept=".json">
-                    </button>
+                
+                <div id="category-details" style="display: none;">
+                    <div class="form-group">
+                        <label for="link-title">Link Title</label>
+                        <input type="text" id="link-title" placeholder="Enter link title">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="link-url">Link URL</label>
+                        <input type="url" id="link-url" placeholder="https://example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="link-description">Description (Optional)</label>
+                        <textarea id="link-description" placeholder="Enter a description for this link"></textarea>
+                    </div>
+                    
+                    <button id="add-link" class="btn btn-primary">Add Link</button>
+                    
+                    <div class="links-container">
+                        <h3 id="links-header" class="section-title"></h3>
+                        <ul id="links-list">
+                            <!-- Links will be added here -->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="notification" id="notification">Operation successful!</div>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Action</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to proceed with this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-cancel" class="btn btn-outline">Cancel</button>
+                <button id="confirm-proceed" class="btn btn-danger">Confirm</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Data structure for storing links with categories
-        let linkData = {
-            categories: [],
-            links: {}
-        };
-
         // DOM Elements
+        const categoryNameInput = document.getElementById('category-name');
+        const addCategoryBtn = document.getElementById('add-category');
         const categoryList = document.getElementById('category-list');
-        const newCategoryInput = document.getElementById('new-category');
-        const addCategoryBtn = document.getElementById('add-category-btn');
-        const linkList = document.getElementById('link-list');
+        const importFileInput = document.getElementById('import-file');
+        const exportBtn = document.getElementById('export-btn');
+        
+        const noCategorySelected = document.getElementById('no-category-selected');
+        const categoryDetails = document.getElementById('category-details');
         const linkTitleInput = document.getElementById('link-title');
         const linkUrlInput = document.getElementById('link-url');
-        const addLinkBtn = document.getElementById('add-link-btn');
-        const exportBtn = document.getElementById('export-btn');
-        const importBtn = document.getElementById('import-btn');
-        const importFileInput = document.getElementById('import-file');
-        const currentCategorySpan = document.getElementById('current-category');
-        const categoryCountSpan = document.getElementById('category-count');
-        const linkCountSpan = document.getElementById('link-count');
-        const notification = document.getElementById('notification');
+        const linkDescriptionInput = document.getElementById('link-description');
+        const addLinkBtn = document.getElementById('add-link');
+        const linksHeader = document.getElementById('links-header');
+        const linksList = document.getElementById('links-list');
+        
+        const toast = document.getElementById('toast');
+        const confirmModal = document.getElementById('confirm-modal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const confirmCancelBtn = document.getElementById('confirm-cancel');
+        const confirmProceedBtn = document.getElementById('confirm-proceed');
 
-        // Load data from localStorage on startup
-        function loadData() {
-            const storedData = localStorage.getItem('linkManagerData');
-            if (storedData) {
-                try {
-                    linkData = JSON.parse(storedData);
-                } catch (e) {
-                    console.error('Error parsing stored data:', e);
-                    showNotification('Error loading data. Using default data.', 'error');
-                }
-            }
+        // State
+        let categories = [];
+        let currentCategory = null;
+        let confirmCallback = null;
+
+        // Initialize the app
+        function init() {
+            loadFromLocalStorage();
             renderCategories();
-            updateCategoryCount();
+            setupEventListeners();
+        }
+
+        // Load data from localStorage
+        function loadFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem('linkManagerData');
+                if (savedData) {
+                    const parsedData = JSON.parse(savedData);
+                    
+                    // Validate the structure of the data
+                    if (Array.isArray(parsedData.categories)) {
+                        categories = parsedData.categories;
+                        
+                        // Ensure each category has a proper structure
+                        categories.forEach(category => {
+                            if (!category.id) category.id = generateId();
+                            if (!category.name) category.name = 'Unnamed Category';
+                            if (!Array.isArray(category.links)) category.links = [];
+                            
+                            // Validate links
+                            category.links.forEach(link => {
+                                if (!link.id) link.id = generateId();
+                                if (!link.title) link.title = 'Untitled';
+                                if (!link.url) link.url = '#';
+                                if (!link.description) link.description = '';
+                                
+                                // Ensure URL has proper format
+                                try {
+                                    new URL(link.url);
+                                } catch (e) {
+                                    link.url = 'https://' + link.url;
+                                }
+                            });
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading data from localStorage:', error);
+                showToast('Error loading data. Starting with empty state.', true);
+                categories = [];
+            }
         }
 
         // Save data to localStorage
-        function saveData() {
-            localStorage.setItem('linkManagerData', JSON.stringify(linkData));
+        function saveToLocalStorage() {
+            try {
+                const dataToSave = { categories };
+                localStorage.setItem('linkManagerData', JSON.stringify(dataToSave));
+            } catch (error) {
+                console.error('Error saving data to localStorage:', error);
+                showToast('Error saving data. Some changes might not be saved.', true);
+            }
+        }
+
+        // Generate a unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
         }
 
         // Render categories list
         function renderCategories() {
             categoryList.innerHTML = '';
             
-            if (linkData.categories.length === 0) {
-                categoryList.innerHTML = '<li class="empty-state"><i>📁</i>No categories yet. Add one!</li>';
+            if (categories.length === 0) {
+                const emptyItem = document.createElement('li');
+                emptyItem.className = 'category-item';
+                emptyItem.textContent = 'No categories yet. Create one!';
+                emptyItem.style fontStyle = 'italic';
+                emptyItem.style.color = 'var(--text-light)';
+                categoryList.appendChild(emptyItem);
                 return;
             }
             
-            linkData.categories.forEach((category, index) => {
+            categories.forEach(category => {
                 const li = document.createElement('li');
                 li.className = 'category-item';
-                li.textContent = category;
-                li.dataset.index = index;
+                if (currentCategory && currentCategory.id === category.id) {
+                    li.classList.add('active');
+                }
                 
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'delete-btn';
-                deleteBtn.innerHTML = '✕';
-                deleteBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    deleteCategory(index);
+                li.innerHTML = `
+                    <span class="category-name">${escapeHtml(category.name)}</span>
+                    <div class="category-actions">
+                        <button class="btn btn-sm btn-outline edit-category" data-id="${category.id}" title="Rename">✏️</button>
+                        <button class="btn btn-sm btn-danger delete-category" data-id="${category.id}" title="Delete">🗑️</button>
+                    </div>
+                `;
+                
+                li.addEventListener('click', (e) => {
+                    // If clicking on buttons, don't activate the category
+                    if (e.target.closest('.btn')) return;
+                    selectCategory(category.id);
                 });
                 
-                li.appendChild(deleteBtn);
-                li.addEventListener('click', () => selectCategory(index));
                 categoryList.appendChild(li);
             });
             
-            // Select first category by default if exists
-            if (linkData.categories.length > 0 && !linkData.currentCategory) {
-                selectCategory(0);
-            }
+            // Add event listeners to the buttons
+            document.querySelectorAll('.edit-category').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent category selection
+                    editCategory(btn.dataset.id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-category').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent category selection
+                    deleteCategory(btn.dataset.id);
+                });
+            });
         }
 
-        // Render links for current category
+        // Select a category
+        function selectCategory(categoryId) {
+            const category = categories.find(c => c.id === categoryId);
+            if (!category) return;
+            
+            currentCategory = category;
+            renderCategories();
+            renderLinks();
+            
+            noCategorySelected.style.display = 'none';
+            categoryDetails.style.display = 'block';
+            linksHeader.textContent = `${category.name} Links`;
+            
+            // Add fade-in animation
+            categoryDetails.classList.add('fade-in');
+            setTimeout(() => categoryDetails.classList.remove('fade-in'), 300);
+        }
+
+        // Render links for the current category
         function renderLinks() {
-            linkList.innerHTML = '';
+            linksList.innerHTML = '';
             
-            const category = linkData.currentCategory;
-            if (!category) {
-                linkList.innerHTML = '<li class="empty-state"><i>🔗</i>Select a category to view links</li>';
-                currentCategorySpan.textContent = 'None';
-                linkCountSpan.textContent = '0';
+            if (!currentCategory || currentCategory.links.length === 0) {
+                const emptyItem = document.createElement('li');
+                emptyItem.className = 'link-item';
+                emptyItem.innerHTML = `
+                    <div class="empty-state">
+                        <p>No links in this category yet.</p>
+                        <p>Add your first link using the form above.</p>
+                    </div>
+                `;
+                linksList.appendChild(emptyItem);
                 return;
             }
             
-            currentCategorySpan.textContent = category;
-            
-            const links = linkData.links[category] || [];
-            if (links.length === 0) {
-                linkList.innerHTML = '<li class="empty-state"><i>🔗</i>No links in this category. Add one!</li>';
-                linkCountSpan.textContent = '0';
-                return;
-            }
-            
-            linkCountSpan.textContent = links.length;
-            
-            links.forEach((link, index) => {
+            currentCategory.links.forEach(link => {
                 const li = document.createElement('li');
                 li.className = 'link-item';
+                li.innerHTML = `
+                    <div class="link-info">
+                        <div class="link-title">${escapeHtml(link.title)}</div>
+                        <div class="link-url">${escapeHtml(link.url)}</div>
+                        ${link.description ? `<div class="link-description">${escapeHtml(link.description)}</div>` : ''}
+                    </div>
+                    <div class="link-actions">
+                        <a href="${escapeHtml(link.url)}" target="_blank" class="btn btn-sm btn-outline" title="Open link">↗️</a>
+                        <button class="btn btn-sm btn-danger delete-link" data-id="${link.id}" title="Delete">🗑️</button>
+                    </div>
+                `;
                 
-                const linkInfo = document.createElement('div');
-                linkInfo.className = 'link-info';
-                
-                const linkTitle = document.createElement('span');
-                linkTitle.className = 'link-title';
-                linkTitle.textContent = link.title;
-                
-                const linkUrl = document.createElement('a');
-                linkUrl.className = 'link-url';
-                linkUrl.href = link.url;
-                linkUrl.target = '_blank';
-                linkUrl.textContent = link.url;
-                linkUrl.title = 'Visit link';
-                
-                linkInfo.appendChild(linkTitle);
-                linkInfo.appendChild(linkUrl);
-                
-                const actions = document.createElement('div');
-                actions.className = 'link-actions';
-                
-                const visitBtn = document.createElement('button');
-                visitBtn.className = 'visit-btn';
-                visitBtn.innerHTML = '↗';
-                visitBtn.title = 'Visit link';
-                visitBtn.addEventListener('click', () => {
-                    window.open(link.url, '_blank');
+                li.querySelector('.delete-link').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteLink(link.id);
                 });
                 
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'delete-btn';
-                deleteBtn.innerHTML = '✕';
-                deleteBtn.title = 'Delete link';
-                deleteBtn.addEventListener('click', () => deleteLink(index));
-                
-                actions.appendChild(visitBtn);
-                actions.appendChild(deleteBtn);
-                
-                li.appendChild(linkInfo);
-                li.appendChild(actions);
-                linkList.appendChild(li);
+                linksList.appendChild(li);
             });
         }
 
         // Add a new category
         function addCategory() {
-            const categoryName = newCategoryInput.value.trim();
+            const name = categoryNameInput.value.trim();
             
-            if (!categoryName) {
-                showNotification('Please enter a category name', 'error');
+            if (!name) {
+                showToast('Please enter a category name.', true);
                 return;
             }
             
-            if (linkData.categories.includes(categoryName)) {
-                showNotification('Category already exists', 'error');
+            // Check for duplicate category names
+            if (categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+                showToast('A category with this name already exists.', true);
                 return;
             }
             
-            linkData.categories.push(categoryName);
-            linkData.links[categoryName] = [];
-            saveData();
+            const newCategory = {
+                id: generateId(),
+                name: name,
+                links: []
+            };
             
-            newCategoryInput.value = '';
+            categories.push(newCategory);
+            saveToLocalStorage();
+            categoryNameInput.value = '';
             renderCategories();
-            updateCategoryCount();
-            showNotification(`Category "${categoryName}" added`);
+            showToast('Category added successfully!');
+        }
+
+        // Edit a category name
+        function editCategory(categoryId) {
+            const category = categories.find(c => c.id === categoryId);
+            if (!category) return;
+            
+            const newName = prompt('Enter new category name:', category.name);
+            
+            if (newName === null) return; // User canceled
+            
+            const trimmedName = newName.trim();
+            if (!trimmedName) {
+                showToast('Category name cannot be empty.', true);
+                return;
+            }
+            
+            // Check for duplicate category names
+            if (categories.some(c => c.id !== categoryId && c.name.toLowerCase() === trimmedName.toLowerCase())) {
+                showToast('A category with this name already exists.', true);
+                return;
+            }
+            
+            category.name = trimmedName;
+            saveToLocalStorage();
+            renderCategories();
+            showToast('Category name updated!');
         }
 
         // Delete a category
-        function deleteCategory(index) {
-            if (index < 0 || index >= linkData.categories.length) return;
+        function deleteCategory(categoryId) {
+            const category = categories.find(c => c.id === categoryId);
+            if (!category) return;
             
-            const categoryName = linkData.categories[index];
-            
-            // Remove category and its links
-            linkData.categories.splice(index, 1);
-            delete linkData.links[categoryName];
-            
-            // If we deleted the current category, reset it
-            if (linkData.currentCategory === categoryName) {
-                linkData.currentCategory = null;
-            }
-            
-            saveData();
-            renderCategories();
-            renderLinks();
-            updateCategoryCount();
-            showNotification(`Category "${categoryName}" deleted`, 'error');
-        }
-
-        // Select a category
-        function selectCategory(index) {
-            if (index < 0 || index >= linkData.categories.length) return;
-            
-            linkData.currentCategory = linkData.categories[index];
-            saveData();
-            
-            // Update active category in UI
-            document.querySelectorAll('.category-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelector(`.category-item[data-index="${index}"]`).classList.add('active');
-            
-            renderLinks();
+            showConfirm(
+                `Are you sure you want to delete the category "${category.name}" and all its links?`,
+                () => {
+                    categories = categories.filter(c => c.id !== categoryId);
+                    
+                    if (currentCategory && currentCategory.id === categoryId) {
+                        currentCategory = null;
+                        noCategorySelected.style.display = 'block';
+                        categoryDetails.style.display = 'none';
+                    }
+                    
+                    saveToLocalStorage();
+                    renderCategories();
+                    showToast('Category deleted successfully!');
+                }
+            );
         }
 
         // Add a new link to the current category
         function addLink() {
-            const title = linkTitleInput.value.trim();
-            const url = linkUrlInput.value.trim();
-            
-            if (!linkData.currentCategory) {
-                showNotification('Please select a category first', 'error');
+            if (!currentCategory) {
+                showToast('Please select a category first.', true);
                 return;
             }
             
-            if (!title || !url) {
-                showNotification('Please enter both title and URL', 'error');
+            const title = linkTitleInput.value.trim();
+            const url = linkUrlInput.value.trim();
+            const description = linkDescriptionInput.value.trim();
+            
+            if (!title) {
+                showToast('Please enter a link title.', true);
+                return;
+            }
+            
+            if (!url) {
+                showToast('Please enter a link URL.', true);
                 return;
             }
             
@@ -647,181 +773,236 @@
             try {
                 new URL(url);
             } catch (e) {
-                showNotification('Please enter a valid URL', 'error');
-                return;
+                // Try adding https:// prefix
+                try {
+                    new URL('https://' + url);
+                } catch (e2) {
+                    showToast('Please enter a valid URL.', true);
+                    return;
+                }
             }
             
-            // Initialize links array for category if not exists
-            if (!linkData.links[linkData.currentCategory]) {
-                linkData.links[linkData.currentCategory] = [];
-            }
+            const finalUrl = url.startsWith('http') ? url : 'https://' + url;
             
-            // Add link
-            linkData.links[linkData.currentCategory].push({
+            const newLink = {
+                id: generateId(),
                 title: title,
-                url: url,
-                dateAdded: new Date().toISOString()
-            });
-            
-            saveData();
-            renderLinks();
-            
-            // Clear inputs
-            linkTitleInput.value = '';
-            linkUrlInput.value = '';
-            
-            showNotification(`Link "${title}" added to "${linkData.currentCategory}"`);
-        }
-
-        // Delete a link from current category
-        function deleteLink(index) {
-            const category = linkData.currentCategory;
-            if (!category || !linkData.links[category] || index < 0 || index >= linkData.links[category].length) return;
-            
-            const link = linkData.links[category][index];
-            linkData.links[category].splice(index, 1);
-            
-            saveData();
-            renderLinks();
-            showNotification(`Link "${link.title}" deleted`, 'error');
-        }
-
-        // Export current category to JSON
-        function exportCategory() {
-            if (!linkData.currentCategory) {
-                showNotification('Please select a category to export', 'error');
-                return;
-            }
-            
-            const categoryData = {
-                category: linkData.currentCategory,
-                links: linkData.links[linkData.currentCategory] || []
+                url: finalUrl,
+                description: description
             };
             
-            const dataStr = JSON.stringify(categoryData, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            currentCategory.links.push(newLink);
+            saveToLocalStorage();
+            renderLinks();
             
-            const exportFileDefaultName = `${linkData.currentCategory}-links.json`;
+            // Clear form inputs
+            linkTitleInput.value = '';
+            linkUrlInput.value = '';
+            linkDescriptionInput.value = '';
+            
+            showToast('Link added successfully!');
+        }
+
+        // Delete a link from the current category
+        function deleteLink(linkId) {
+            if (!currentCategory) return;
+            
+            const link = currentCategory.links.find(l => l.id === linkId);
+            if (!link) return;
+            
+            showConfirm(
+                `Are you sure you want to delete the link "${link.title}"?`,
+                () => {
+                    currentCategory.links = currentCategory.links.filter(l => l.id !== linkId);
+                    saveToLocalStorage();
+                    renderLinks();
+                    showToast('Link deleted successfully!');
+                }
+            );
+        }
+
+        // Export all data as JSON
+        function exportData() {
+            if (categories.length === 0) {
+                showToast('No data to export.', true);
+                return;
+            }
+            
+            const dataStr = JSON.stringify({ categories }, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'link-manager-data.json';
             
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
             linkElement.setAttribute('download', exportFileDefaultName);
             linkElement.click();
             
-            showNotification(`Exported links from "${linkData.currentCategory}"`);
+            showToast('Data exported successfully!');
         }
 
-        // Import links from JSON file
-        function importLinks() {
-            if (!linkData.currentCategory) {
-                showNotification('Please select a category first', 'error');
-                return;
-            }
-            
-            const file = importFileInput.files[0];
-            if (!file) {
-                showNotification('Please select a file to import', 'error');
-                return;
-            }
+        // Import data from JSON file
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
             
             const reader = new FileReader();
+            
             reader.onload = function(e) {
                 try {
                     const importedData = JSON.parse(e.target.result);
                     
-                    if (!importedData.category || !importedData.links) {
-                        showNotification('Invalid file format', 'error');
-                        return;
+                    // Validate the structure of imported data
+                    if (!importedData.categories || !Array.isArray(importedData.categories)) {
+                        throw new Error('Invalid data format');
                     }
                     
-                    // If category doesn't exist, create it
-                    if (!linkData.categories.includes(importedData.category)) {
-                        linkData.categories.push(importedData.category);
-                        linkData.links[importedData.category] = [];
-                    }
-                    
-                    // Add imported links to current category
-                    const importedLinks = importedData.links;
-                    if (!Array.isArray(importedLinks)) {
-                        showNotification('Invalid links format in file', 'error');
-                        return;
-                    }
-                    
-                    // Validate each link
-                    for (const link of importedLinks) {
-                        if (!link.title || !link.url) {
-                            showNotification('Some links are missing title or URL', 'error');
-                            return;
-                        }
+                    // Validate each category and link
+                    importedData.categories.forEach(category => {
+                        if (!category.id) category.id = generateId();
+                        if (!category.name) category.name = 'Unnamed Category';
+                        if (!Array.isArray(category.links)) category.links = [];
                         
-                        try {
-                            new URL(link.url);
-                        } catch (err) {
-                            showNotification(`Invalid URL in link: ${link.title}`, 'error');
-                            return;
+                        category.links.forEach(link => {
+                            if (!link.id) link.id = generateId();
+                            if (!link.title) link.title = 'Untitled';
+                            if (!link.url) link.url = '#';
+                            if (!link.description) link.description = '';
+                            
+                            // Ensure URL has proper format
+                            try {
+                                new URL(link.url);
+                            } catch (e) {
+                                link.url = 'https://' + link.url;
+                            }
+                        });
+                    });
+                    
+                    // Confirm with user before overwriting
+                    showConfirm(
+                        `This will replace all your current data. You have ${categories.length} categories and will import ${importedData.categories.length} categories. Continue?`,
+                        () => {
+                            categories = importedData.categories;
+                            currentCategory = null;
+                            saveToLocalStorage();
+                            renderCategories();
+                            noCategorySelected.style.display = 'block';
+                            categoryDetails.style.display = 'none';
+                            showToast('Data imported successfully!');
+                        },
+                        () => {
+                            // Reset file input if canceled
+                            importFileInput.value = '';
                         }
-                    }
+                    );
                     
-                    // Merge links
-                    if (!linkData.links[linkData.currentCategory]) {
-                        linkData.links[linkData.currentCategory] = [];
-                    }
-                    
-                    linkData.links[linkData.currentCategory] = [
-                        ...linkData.links[linkData.currentCategory],
-                        ...importedLinks
-                    ];
-                    
-                    saveData();
-                    renderCategories();
-                    renderLinks();
-                    updateCategoryCount();
-                    
-                    showNotification(`Imported ${importedLinks.length} links to "${linkData.currentCategory}"`);
-                } catch (err) {
-                    showNotification('Error parsing JSON file', 'error');
-                    console.error(err);
+                } catch (error) {
+                    console.error('Error parsing imported file:', error);
+                    showToast('Error importing file. Please check the file format.', true);
+                    importFileInput.value = '';
                 }
+            };
+            
+            reader.onerror = function() {
+                showToast('Error reading file.', true);
+                importFileInput.value = '';
             };
             
             reader.readAsText(file);
         }
 
-        // Update category count display
-        function updateCategoryCount() {
-            categoryCountSpan.textContent = linkData.categories.length;
-        }
-
-        // Show notification
-        function showNotification(message, type = 'success') {
-            notification.textContent = message;
-            notification.className = 'notification show ' + type;
+        // Show toast notification
+        function showToast(message, isError = false) {
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (isError) toast.classList.add('error');
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
             
             setTimeout(() => {
-                notification.classList.remove('show');
+                toast.classList.remove('show');
             }, 3000);
         }
 
-        // Event Listeners
-        addCategoryBtn.addEventListener('click', addCategory);
-        newCategoryInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addCategory();
-        });
+        // Show confirmation modal
+        function showConfirm(message, onConfirm, onCancel = null) {
+            document.querySelector('.modal-body p').textContent = message;
+            confirmModal.style.display = 'flex';
+            
+            confirmCallback = {
+                onConfirm,
+                onCancel
+            };
+        }
 
-        addLinkBtn.addEventListener('click', addLink);
-        linkTitleInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addLink();
-        });
-        linkUrlInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addLink();
-        });
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Category events
+            addCategoryBtn.addEventListener('click', addCategory);
+            categoryNameInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addCategory();
+            });
+            
+            // Link events
+            addLinkBtn.addEventListener('click', addLink);
+            linkTitleInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addLink();
+            });
+            linkUrlInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addLink();
+            });
+            
+            // Import/Export events
+            exportBtn.addEventListener('click', exportData);
+            importFileInput.addEventListener('change', importData);
+            
+            // Modal events
+            closeModalBtn.addEventListener('click', () => {
+                confirmModal.style.display = 'none';
+                if (confirmCallback && confirmCallback.onCancel) {
+                    confirmCallback.onCancel();
+                }
+                confirmCallback = null;
+            });
+            
+            confirmCancelBtn.addEventListener('click', () => {
+                confirmModal.style.display = 'none';
+                if (confirmCallback && confirmCallback.onCancel) {
+                    confirmCallback.onCancel();
+                }
+                confirmCallback = null;
+            });
+            
+            confirmProceedBtn.addEventListener('click', () => {
+                if (confirmCallback && confirmCallback.onConfirm) {
+                    confirmCallback.onConfirm();
+                }
+                confirmModal.style.display = 'none';
+                confirmCallback = null;
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === confirmModal) {
+                    confirmModal.style.display = 'none';
+                    if (confirmCallback && confirmCallback.onCancel) {
+                        confirmCallback.onCancel();
+                    }
+                    confirmCallback = null;
+                }
+            });
+        }
 
-        exportBtn.addEventListener('click', exportCategory);
-        importBtn.addEventListener('click', () => importFileInput.click());
-        importFileInput.addEventListener('change', importLinks);
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
 
-        // Initialize the app
-        loadData();
+        // Initialize the app when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
